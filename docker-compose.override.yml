@@ -1,0 +1,9 @@
+version: "3"
+services:
+  mlflow:
+    image: mlflow:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow_artifacts:/mlflow
+    command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlflow --host 0.0.0.0
