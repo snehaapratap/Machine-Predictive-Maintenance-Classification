@@ -1,12 +1,13 @@
 import pandas as pd
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import joblib
-import os
 
-def preprocess(path="data/raw/predictive_maintenance.csv"):
-    df = pd.read_csv(path)
+def preprocess():
+    df = pd.read_csv("include/predictive_maintenance.csv")
     df = df.drop(['UDI', 'Product ID', 'Target'], axis=1)
+
     le_type = LabelEncoder()
     le_failure = LabelEncoder()
     df['Type'] = le_type.fit_transform(df['Type'])
@@ -17,11 +18,13 @@ def preprocess(path="data/raw/predictive_maintenance.csv"):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    os.makedirs("data/processed", exist_ok=True)
-    X_train.to_csv("data/processed/X_train.csv", index=False)
-    X_test.to_csv("data/processed/X_test.csv", index=False)
-    y_train.to_csv("data/processed/y_train.csv", index=False)
-    y_test.to_csv("data/processed/y_test.csv", index=False)
+    os.makedirs("data", exist_ok=True)
+    X_train.to_csv("data/X_train.csv", index=False)
+    X_test.to_csv("data/X_test.csv", index=False)
+    y_train.to_csv("data/y_train.csv", index=False)
+    y_test.to_csv("data/y_test.csv", index=False)
+
+    os.makedirs("models", exist_ok=True)
     joblib.dump(le_failure, "models/label_encoder.pkl")
 
 if __name__ == "__main__":
