@@ -18,7 +18,7 @@ def load_data():
 
 def train_model():
     # Set MLflow tracking URI
-    mlflow.set_tracking_uri("http://localhost:5000")
+    mlflow.set_tracking_uri("http://localhost:5001")
     
     # Start MLflow run
     with mlflow.start_run(run_name="multinomial_classification"):
