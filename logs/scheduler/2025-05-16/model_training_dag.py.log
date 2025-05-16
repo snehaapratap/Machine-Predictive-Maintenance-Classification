@@ -701,3 +701,31 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'train_model'
 [2025-05-16T06:08:50.151+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/model_training_dag.py
 [2025-05-16T06:08:50.165+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/model_training_dag.py took 0.027 seconds
+[2025-05-16T06:09:20.573+0000] {processor.py:157} INFO - Started process (PID=239) to work on /opt/airflow/dags/model_training_dag.py
+[2025-05-16T06:09:20.574+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/model_training_dag.py for tasks to queue
+[2025-05-16T06:09:20.574+0000] {logging_mixin.py:151} INFO - [2025-05-16T06:09:20.574+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/model_training_dag.py
+[2025-05-16T06:09:20.579+0000] {logging_mixin.py:151} INFO - [2025-05-16T06:09:20.578+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/model_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/model_training_dag.py", line 9, in <module>
+    from train_model import train_model
+ModuleNotFoundError: No module named 'train_model'
+[2025-05-16T06:09:20.579+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/model_training_dag.py
+[2025-05-16T06:09:20.595+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/model_training_dag.py took 0.026 seconds
+[2025-05-16T06:09:50.883+0000] {processor.py:157} INFO - Started process (PID=244) to work on /opt/airflow/dags/model_training_dag.py
+[2025-05-16T06:09:50.884+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/model_training_dag.py for tasks to queue
+[2025-05-16T06:09:50.884+0000] {logging_mixin.py:151} INFO - [2025-05-16T06:09:50.884+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/model_training_dag.py
+[2025-05-16T06:09:50.889+0000] {logging_mixin.py:151} INFO - [2025-05-16T06:09:50.888+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/model_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/model_training_dag.py", line 9, in <module>
+    from train_model import train_model
+ModuleNotFoundError: No module named 'train_model'
+[2025-05-16T06:09:50.889+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/model_training_dag.py
+[2025-05-16T06:09:50.903+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/model_training_dag.py took 0.023 seconds
