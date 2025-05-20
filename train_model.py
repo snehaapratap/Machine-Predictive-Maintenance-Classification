@@ -11,7 +11,7 @@ import os
 def load_data():
     # Load your data here - replace with your actual data loading logic
     # This is a placeholder - you'll need to modify this based on your data
-    data = pd.read_csv('data/your_data.csv')
+    data = pd.read_csv('data/predictive_maintenance.csv')
     X = data.drop('target', axis=1)
     y = data['target']
     return X, y

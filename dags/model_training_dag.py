@@ -1,36 +1,31 @@
+"""
+Multinomial Classification DAG using TaskFlow API
+"""
+
+from airflow.decorators import dag, task
+from pendulum import datetime
 import sys
 import os
+
+# Add the root directory to sys.path so we can import train_model
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-from datetime import datetime, timedelta
-
 from train_model import train_model
 
-default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
-}
-
-dag = DAG(
-    'model_training_pipeline',
-    default_args=default_args,
-    description='ML pipeline for multinomial classification',
-    schedule_interval=timedelta(days=1),
+@dag(
     start_date=datetime(2024, 1, 1),
-    catchup=False
+    schedule="@daily",
+    catchup=False,
+    default_args={
+        "owner": "airflow",
+        "retries": 1,
+    },
+    tags=["ml", "classification"],
 )
+def multinomial_classification_pipeline():
+    @task()
+    def run_training():
+        train_model()
 
-train_task = PythonOperator(
-    task_id='train_model',
-    python_callable=train_model,
-    dag=dag
-)
+    run_training()
 
-# Define task dependencies
-train_task 
+multinomial_classification_pipeline() 
