@@ -1,83 +1,45 @@
-# Machine Learning MLOps Pipeline
+Overview
+========
 
-This project implements a complete MLOps pipeline for multinomial classification using MLflow, Airflow, Docker, and Streamlit.
+Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
 
-## Project Structure
+Project Contents
+================
 
-```
-.
-├── app.py                 # Streamlit application
-├── train_model.py         # Model training script
-├── requirements.txt       # Python dependencies
-├── Dockerfile            # Docker configuration
-├── docker-compose.yml    # Docker services orchestration
-└── dags/                 # Airflow DAGs
-    └── model_training_dag.py
-```
+Your Astro project contains the following files and folders:
 
-## Prerequisites
+- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
+    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
+- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
+- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
+- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
+- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
+- plugins: Add custom or community plugins for your project to this file. It is empty by default.
+- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
 
-- Docker and Docker Compose
-- Python 3.9+
-- Git
+Deploy Your Project Locally
+===========================
 
-## Setup and Running
+Start Airflow on your local machine by running 'astro dev start'.
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd <repository-name>
-```
+This command will spin up five Docker containers on your machine, each for a different Airflow component:
 
-2. Start the services using Docker Compose:
-```bash
-docker-compose up --build
-```
+- Postgres: Airflow's Metadata Database
+- Scheduler: The Airflow component responsible for monitoring and triggering tasks
+- DAG Processor: The Airflow component responsible for parsing DAGs
+- API Server: The Airflow component responsible for serving the Airflow UI and API
+- Triggerer: The Airflow component responsible for triggering deferred tasks
 
-This will start:
-- MLflow server (http://localhost:5000)
-- Airflow webserver (http://localhost:8080)
-- Streamlit application (http://localhost:8501)
+When all five containers are ready the command will open the browser to the Airflow UI at http://localhost:8080/. You should also be able to access your Postgres Database at 'localhost:5432/postgres' with username 'postgres' and password 'postgres'.
 
-3. Access the services:
-- MLflow UI: http://localhost:5000
-- Airflow UI: http://localhost:8080 (default credentials: airflow/airflow)
-- Streamlit App: http://localhost:8501
+Note: If you already have either of the above ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
 
-## Components
+Deploy Your Project to Astronomer
+=================================
 
-### MLflow
-- Tracks experiments
-- Logs metrics and parameters
-- Stores models and artifacts
+If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
 
-### Airflow
-- Orchestrates the training pipeline
-- Schedules regular model retraining
-- Monitors pipeline execution
+Contact
+=======
 
-### Streamlit
-- Provides interactive UI for model visualization
-- Allows real-time predictions
-- Displays model performance metrics
-
-## Usage
-
-1. Place your training data in the `data/` directory
-2. Modify the `train_model.py` script to match your data structure
-3. The Airflow DAG will automatically trigger model training
-4. Use the Streamlit interface to make predictions and view results
-
-## Development
-
-To modify the model or add new features:
-
-1. Update the model training code in `train_model.py`
-2. Modify the Streamlit interface in `app.py`
-3. Update the Airflow DAG in `dags/model_training_dag.py`
-4. Rebuild and restart the containers:
-```bash
-docker-compose down
-docker-compose up --build
-```
-
+The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
