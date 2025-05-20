@@ -5,10 +5,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report
 import os
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 def load_data():
     # Load your data here - replace with your actual data loading logic
@@ -17,16 +15,6 @@ def load_data():
     X = data.drop('target', axis=1)
     y = data['target']
     return X, y
-
-def plot_confusion_matrix(y_true, y_pred, classes):
-    cm = confusion_matrix(y_true, y_pred)
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=classes, yticklabels=classes)
-    plt.title('Confusion Matrix')
-    plt.ylabel('True Label')
-    plt.xlabel('Predicted Label')
-    plt.tight_layout()
-    return plt
 
 def train_model():
     # Set MLflow tracking URI
@@ -56,7 +44,6 @@ def train_model():
         
         # Log parameters
         mlflow.log_param("n_estimators", 100)
-        mlflow.log_param("random_state", 42)
         
         # Log metrics
         mlflow.log_metric("accuracy", accuracy)
@@ -65,27 +52,15 @@ def train_model():
                 for metric_name, value in metrics.items():
                     mlflow.log_metric(f"{class_name}_{metric_name}", value)
         
-        # Create and log confusion matrix plot
-        plt = plot_confusion_matrix(y_test, y_pred, model.classes_)
-        plt.savefig('confusion_matrix.png')
-        mlflow.log_artifact('confusion_matrix.png')
-        plt.close()
-        
         # Log model
         mlflow.sklearn.log_model(model, "model")
         
         # Save scaler
         mlflow.sklearn.log_model(scaler, "scaler")
         
-        # Save feature names
-        feature_names = X.columns.tolist()
-        mlflow.log_param("feature_names", feature_names)
-        
         print(f"Model accuracy: {accuracy}")
         print("\nClassification Report:")
         print(classification_report(y_test, y_pred))
-        
-        return model, scaler, feature_names
 
 if __name__ == "__main__":
     train_model() 

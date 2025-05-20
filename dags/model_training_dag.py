@@ -1,10 +1,11 @@
-import sys
-sys.path.append('/opt/airflow')
-
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
+import sys
 import os
+
+# Add the project root directory to Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from train_model import train_model
 
@@ -26,19 +27,11 @@ dag = DAG(
     catchup=False
 )
 
-def train_task():
-    model, scaler, feature_names = train_model()
-    return {
-        'model': model,
-        'scaler': scaler,
-        'feature_names': feature_names
-    }
-
-train_operator = PythonOperator(
+train_task = PythonOperator(
     task_id='train_model',
-    python_callable=train_task,
+    python_callable=train_model,
     dag=dag
 )
 
 # Define task dependencies
-train_operator 
+train_task 

@@ -20,17 +20,14 @@ def load_latest_model():
     model = mlflow.sklearn.load_model(model_uri)
     scaler = mlflow.sklearn.load_model(scaler_uri)
     
-    # Get feature names from the run
-    feature_names = latest_run.data.params.get('feature_names', '').strip('[]').replace("'", "").split(', ')
-    
-    return model, scaler, latest_run, feature_names
+    return model, scaler, latest_run
 
 def main():
     st.title("Multinomial Classification Model Dashboard")
     
     # Load model and metrics
     try:
-        model, scaler, latest_run, feature_names = load_latest_model()
+        model, scaler, latest_run = load_latest_model()
         
         # Display model metrics
         st.header("Model Performance Metrics")
@@ -53,14 +50,15 @@ def main():
         st.header("Make Predictions")
         
         # Create input fields for features
-        input_data = {}
-        for feature in feature_names:
-            input_data[feature] = st.number_input(f"{feature}", value=0.0)
+        # Note: You'll need to modify this based on your actual features
+        feature1 = st.number_input("Feature 1", value=0.0)
+        feature2 = st.number_input("Feature 2", value=0.0)
+        feature3 = st.number_input("Feature 3", value=0.0)
         
         if st.button("Predict"):
             # Prepare input data
-            input_df = pd.DataFrame([input_data])
-            input_scaled = scaler.transform(input_df)
+            input_data = np.array([[feature1, feature2, feature3]])
+            input_scaled = scaler.transform(input_data)
             
             # Make prediction
             prediction = model.predict(input_scaled)
@@ -73,19 +71,6 @@ def main():
             fig, ax = plt.subplots(figsize=(10, 6))
             sns.barplot(x=model.classes_, y=probabilities[0])
             plt.title("Class Probabilities")
-            plt.xticks(rotation=45)
-            st.pyplot(fig)
-            
-            # Display feature importance
-            st.header("Feature Importance")
-            feature_importance = pd.DataFrame({
-                'Feature': feature_names,
-                'Importance': model.feature_importances_
-            }).sort_values('Importance', ascending=False)
-            
-            fig, ax = plt.subplots(figsize=(10, 6))
-            sns.barplot(data=feature_importance, x='Importance', y='Feature')
-            plt.title("Feature Importance")
             st.pyplot(fig)
             
     except Exception as e:
