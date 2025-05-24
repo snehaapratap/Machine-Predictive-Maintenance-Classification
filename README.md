@@ -1,45 +1,42 @@
-Overview
-========
+# Machine Predictive Maintenance Classification
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+## Overview
 
-Project Contents
-================
+This project focuses on building a machine learning model to classify the maintenance needs of industrial machines based on sensor data. The goal is to predict whether a machine requires maintenance, is in good condition, or is at risk of failure. The project uses Python, Docker, and MLflow for model development, tracking, and deployment.
 
-Your Astro project contains the following files and folders:
+## Project Contents
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
-    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+The project contains the following files and folders:
 
-Deploy Your Project Locally
-===========================
+- **`Dockerfile`**: Defines the Docker image for the project, including the Python environment and dependencies.
+- **`requirements.txt`**: Lists the Python packages required for the project.
+- **`mlflow_artifacts/`**: Directory to store MLflow artifacts such as models and experiment results.
+- **`app.py`**: The main Streamlit application for visualizing predictions and interacting with the model.
+- **`data/`**: Contains the dataset used for training and testing the model.
+- **`notebooks/`**: Jupyter notebooks for exploratory data analysis (EDA) and model development.
+- **`src/`**: Source code for the project, including data preprocessing, feature engineering, and model training scripts.
 
-Start Airflow on your local machine by running 'astro dev start'.
+## Features
 
-This command will spin up five Docker containers on your machine, each for a different Airflow component:
+- **Data Preprocessing**: Cleans and prepares raw sensor data for model training.
+- **Feature Engineering**: Extracts meaningful features from sensor data.
+- **Model Training**: Trains a classification model to predict maintenance needs.
+- **Model Tracking**: Uses MLflow to track experiments and manage model versions.
+- **Interactive Dashboard**: A Streamlit app for visualizing predictions and interacting with the model.
 
-- Postgres: Airflow's Metadata Database
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- DAG Processor: The Airflow component responsible for parsing DAGs
-- API Server: The Airflow component responsible for serving the Airflow UI and API
-- Triggerer: The Airflow component responsible for triggering deferred tasks
+## Getting Started
 
-When all five containers are ready the command will open the browser to the Airflow UI at http://localhost:8080/. You should also be able to access your Postgres Database at 'localhost:5432/postgres' with username 'postgres' and password 'postgres'.
+### Prerequisites
 
-Note: If you already have either of the above ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
+- Python 3.10 or higher
+- Docker
+- MLflow
+- Streamlit
 
-Deploy Your Project to Astronomer
-=================================
+### Installation
 
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
-
-Contact
-=======
-
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/snehaapratap/machine-predictive-maintenance-classification.git
+   cd machine-predictive-maintenance-classification
+   ```
