@@ -35,8 +35,76 @@ The project contains the following files and folders:
 
 ### Installation
 
-1. Clone the repository:
+🔹 Clone the repository:
    ```bash
    git clone https://github.com/snehaapratap/machine-predictive-maintenance-classification.git
    cd machine-predictive-maintenance-classification
    ```
+
+### 
+
+🔹 Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+
+### 🔹 Train the model
+
+```bash
+python train_model.py
+```
+
+### 🔹 Run the pipeline
+
+```bash
+prefect server start
+python pipeline.py
+```
+
+### 🔹 Launch with Prefect
+
+```bash
+prefect deployment build pipeline.py:main_flow \
+  --name maintenance-flow \
+  --storage-block github/github-block \
+  --pool default-agent-pool
+
+prefect deployment apply main_flow-deployment.yaml
+prefect worker start
+prefect deployment run main_flow/maintenance-flow
+```
+
+
+---
+
+## 🐳 Docker
+
+Build the container:
+
+```bash
+docker build -t predictive-maintenance .
+```
+
+Run it:
+
+```bash
+docker run -p 8080:8080 predictive-maintenance
+```
+
+---
+
+## ☁️ Infrastructure (Terraform)
+
+Setup cloud infrastructure (e.g. S3, EC2) using:
+
+```bash
+terraform init
+terraform apply
+```
+
+---
+
+
+
+
